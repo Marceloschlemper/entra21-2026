@@ -9,7 +9,8 @@ public class listacondicionais {
 	//exercicio4();
     //exercicio5();
 	//exercicio6();
-		exercicio7();
+    //exercicio7();
+		exercicio8();
 	}
 	
 	static void exercicio1() {
@@ -125,8 +126,7 @@ public class listacondicionais {
 		
 		static void exercicio7() {
 			Scanner sc = new Scanner(System.in);
-
-			System.out.print("qual foi a sua nota");
+		System.out.print("qual foi a sua nota");
 			int nota1 = sc.nextInt();
 			
 			if (nota1 >= 0 && nota1 <= 4) {
@@ -139,7 +139,30 @@ public class listacondicionais {
 				System.out.println("sua nota foi excelente!!!");
 			    
 			}
-			
+	
+				
+				
+			}
+		
+		   static void exercicio8() {
+			   Scanner sc = new Scanner(System.in);
+			   System.out.print("qual o tamanho do primeiro lado");
+				int lado1 = sc.nextInt();
+				System.out.print("qual o tamanho do segundo lado");
+				int lado2 = sc.nextInt();
+				System.out.print("qual o tamanho do terceiro lado");
+				int lado3 = sc.nextInt();
+				
+				if (lado1 + lado2 > lado3 && lado1 + lado3 > lado2 && lado2 + lado3 > lado1) {
+					System.out.println("é um triangulo");
+				} else {
+					System.out.println("nao é um triangulo");
+					
+				sc.close();
+				
+				}
+
+			   
 	
 		
 		
