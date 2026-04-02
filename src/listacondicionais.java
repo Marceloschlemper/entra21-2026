@@ -6,7 +6,8 @@ public class listacondicionais {
     //exercicio1();
 	//exercicio2();
 	//exercicio3();
-	exercicio4();
+	//exercicio4();
+		exercicio5();
 	}
 	
 	static void exercicio1() {
@@ -71,7 +72,27 @@ public class listacondicionais {
 			 System.out.println("voce foi aprovado");
 			 
          sc.close();
+	
+	}
+		 
+    
+    	
+    }
+	
+	static void exercicio5() {
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("qual a sua idade");
+		int idade = sc.nextInt();
+		 if (idade < 16) {
+			 System.out.println("voce nao pode votar!");
+		 } else {
+			 System.out.println("voce ja pode votar");
+			 
+		sc.close();
 		 }
+		
+		
 		
 		
 	}
