@@ -7,7 +7,9 @@ public class listacondicionais {
 	//exercicio2();
 	//exercicio3();
 	//exercicio4();
-		exercicio5();
+    //exercicio5();
+	//exercicio6();
+		exercicio7();
 	}
 	
 	static void exercicio1() {
@@ -91,6 +93,55 @@ public class listacondicionais {
 			 
 		sc.close();
 		 }
+		
+		
+		
+		
+	}
+	
+	static void exercicio6() {
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("qual o primeiro numero");
+		int numero1 = sc.nextInt();
+		System.out.print("qual o segundo numero");
+		int numero2 = sc.nextInt();
+		System.out.print("qual o terceiro numero");
+		int numero3 = sc.nextInt();
+		
+		if (numero1 >= numero2 && numero1 >= numero3) {
+			System.out.println("o numero 1 é maior");
+		} else if (numero2 >= numero3 && numero2 >= numero1) {
+		    System.out.println("numero 2 é o maior");
+		} else {
+			System.out.println("numero 3 é maior");
+			
+		sc.close();
+		}
+		
+		
+		
+		}
+		
+		static void exercicio7() {
+			Scanner sc = new Scanner(System.in);
+
+			System.out.print("qual foi a sua nota");
+			int nota1 = sc.nextInt();
+			
+			if (nota1 >= 0 && nota1 <= 4) {
+				System.out.println("sua nota foi insuficiente");
+			} else if (nota1 > 4 && nota1 <= 6) {
+			    System.out.println("sua nota foi regular");
+			} else if (nota1 > 6 && nota1 <=8) {
+				System.out.println("sua nota foi boa");
+			} else {
+				System.out.println("sua nota foi excelente!!!");
+			    
+			}
+			
+	
+		
 		
 		
 		
