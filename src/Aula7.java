@@ -7,7 +7,8 @@ public class Aula7 {
     //exemplo();
 	//exercicio();
 	//exercicio2();
-		exercicio3();
+     //exercicio3();
+	exercicio4();
 		
 	}
 	static void exemplo() {
@@ -98,12 +99,59 @@ public class Aula7 {
 		    	
 		    		
 		    	}
+		 }
+		 
+		 static void exercicio4() {
+			 Scanner input = new Scanner(System.in);
+		    	int[] numeros = new int[15];
+		    	//LENDO 15 NUMEROS
+		    	for (int i = 0; i < 15; i++) {
+			    	 System.out.print("digite um numero para a posiçao" + i + ":");
+				     numeros[i] =  input.nextInt();
+		    	}
+		    	//ACHANDO O MAIOR
+		    	int maior = numeros[0];
+		    	for (int i = 0; i < 15; i++) {
+		    		if(numeros[i] > maior) {
+		    			maior = numeros[i];
+		    		}		
+		    		
+		    		}
+		    		 System.out.println("o numero maior é" + maior);
+		    		
+		    
+		    			
+		    	
+		    	System.out.println("e esta localizado em");
+		    	for(int i = 0; i < 15; i++) {
+		    		if(numeros[i] == maior) {
+		    			System.out.print((i + 1) + " ");
+		    		}
+		    	}
+		    	input.close();
+		    	
+		    	       
+		    	        
+		    	 
+		 
+		    		
+		    	
+		    	
+		    		
+		    	}
+		    	
+		    	
+			 
+		    	
+		    	
 		    	
 		 
-		 	
+ 	
     }
+		 
+
     
-}
+
 		 
 		 
 		   
