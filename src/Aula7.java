@@ -8,8 +8,8 @@ public class Aula7 {
 	//exercicio();
 	//exercicio2();
      //exercicio3();
-	exercicio4();
-		
+	//exercicio4();
+		exercicio5();
 	}
 	static void exemplo() {
 			String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
@@ -112,9 +112,9 @@ public class Aula7 {
 		    	//ACHANDO O MAIOR
 		    	int maior = numeros[0];
 		    	for (int i = 0; i < 15; i++) {
-		    		if(numeros[i] > maior) {
+		    		if(numeros[i]> maior) {
 		    			maior = numeros[i];
-		    		}		
+		    		}		 
 		    		
 		    		}
 		    		 System.out.println("o numero maior é" + maior);
@@ -130,24 +130,42 @@ public class Aula7 {
 		    	}
 		    	input.close();
 		    	
-		    	       
-		    	        
-		    	 
+		    	  		
+		    	}
 		 
-		    		
-		    	
-		    	
-		    		
+		 static void exercicio5() {
+			 Scanner input = new Scanner(System.in);
+		    	int[] numeros = new int[8];
+		    	//LENDO 8 NUMEROS
+		    	for (int i = 0; i < 8; i++) {
+			    	 System.out.print("digite um numero para a posiçao" + i + ":");
+				     numeros[i] =  input.nextInt();
+		    	}
+		    	for (int i = 0; i < 8; i++) {
+		    		for(int j = i + 1; j < 8; j++) {
+		    			
+		    			if (numeros[i] > numeros[j]) {
+		    				int temp = numeros[i];
+		    				numeros[i] = numeros[j];
+		    				numeros[j] = temp;
+		    			
+		    			}
+		    		}
 		    	}
 		    	
+		    	System.out.println("ordem crescente:");
+		    	for(int i = 0; i < 8; i++) {
+		    	   System.out.println(numeros[i] + " ");
+		    	
+		    	   input.close();
+		    	} 
+		    	
+		    	  
 		    	
 			 
+		 }
 		    	
-		    	
-		    	
-		 
- 	
-    }
+		    	}
 		 
 
     
