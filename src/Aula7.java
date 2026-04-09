@@ -6,7 +6,8 @@ public class Aula7 {
 
     //exemplo();
 	//exercicio();
-	exercicio2();
+	//exercicio2();
+		exercicio3();
 		
 	}
 	static void exemplo() {
@@ -64,23 +65,53 @@ public class Aula7 {
     	Scanner sc = new Scanner(System.in);
     	int[] numeros = new int[10];
 		 
-		 for (int i = 0; i < 10; i++) {
+		 //CAPTANDO OS NUMEROS 
+    	for (int i = 0; i < 10; i++) {
 	    	 System.out.print("digite um numero para a posiçao" + i + ":");
 		 numeros[i] =  sc.nextInt();
 		 }
-		 for (int i = 0; i < 10; i++) {
+		
+		 //DETECTANDO OS NUMEROS PARES E IMPARES E PASSANDO PARA O USUARIO
+    	for (int i = 0; i < 10; i++) {
 		    if (numeros[i] % 2 == 0) {
 			 System.out.println("o numero " + numeros[i] + " é par");
 		 } else {
 			 System.out.println("o numero " +  numeros[i] + " é impar");
+		 
+		 }  
+		 sc.close(); 
 		 }
 		 
 		 }
 		 
-		   
+		 static void exercicio3() {
+			 Scanner sc = new Scanner(System.in);
+		    	int[] numeros = new int[10];
+		    	
+		    	for (int i = 0; i < 10; i++) {
+			    	 System.out.print("digite um numero para a posiçao" + i + ":");
+				 numeros[i] =  sc.nextInt();
+		    	}
+		    	for (int i = 10 -1; i >=0; i--) {
+		    	System.out.println("a sequencia de traz pra frente é..." + numeros[i]);
+		    	
+		    	
+		    		
+		    	}
+		    	
+		 
+		 	
     }
     
-	}  
+}
+		 
+		 
+		   
+    
+   
+    
+    
+     
 	
 
 	
