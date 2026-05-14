@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="PT-Br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <form action="">
+
+    <input type="text" id="nome" placeholder ="ex: marcelo">
+
+    <input type="email" id="email" placeholder ="ex: marcelo@gmail.com">
+
+    <input type="button" value="gravar" onclick="validar()">
+
+   </form>
+ 
+    <script>
+       /*  const inputNome = document.getElementById("nome")
+        console.log(inputNome)
+
+        console.log(inputNome.value)
+
+        const inputEmail = document.getElementById("email")
+        console.log(inputEmail)
+
+        const inputs = document.getElementsByTagName("input")
+        console.log(inputs[0]) */
+
+ function validar() {
+
+    const inputNome = document.getElementById("nome")
+
+    if(inputNome.value.trim() === '') {
+        alert("O nome deve ser informado!")
+        inputNome.focus()
+        return
+    }
+
+    const inputEmail = document.getElementById("email")
+
+ if(inputEmail.value.trim() === '') {
+        alert("O email deve ser informado!")
+        email.focus()
+        return
+    }
+if(!inputEmail.value.includes('@')) {
+        alert("O email precisa ter @")
+        inputEmail.focus()
+        return
+    }
+   
+
+    document.getElementsByTagName('form')[0].submit()
+
+}
+     </script>
+</body>
+</html>
