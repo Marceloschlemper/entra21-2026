@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <style>
+
+        .linha{
+            display:flex;
+            align-items:center;
+            margin-bottom: 10px;
+        }
+
+        .poltrona{
+            width:40px;
+            height:40px;
+            margin:3px;
+            cursor:pointer;
+        }
+
+        .verde{
+            background: green;
+            color: white;
+        }
+
+        h1{
+            color: white;
+        }
+
+        .caixa{
+            width: 100%;
+            text-align: center;
+            background: blue;
+        }
+
+        .container{
+            display: flex;
+        }
+
+        body{
+            margin: 0;
+        }
+
+        .esquerda{
+            width: 50%;
+            background: rgb(228, 228, 255);
+            min-height: 100vh;
+        }
+
+        .direita{
+          text-align: center;
+         
+        }
+
+        #sala{
+            display:block;
+        }
+
+        .poster{
+            width: 250px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 10px;
+        }
+
+        .caixa-botao{
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .botao-confirmar{
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .letra{
+            width: 20px;
+            display: inline-block;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .tela{
+            width: 300px;
+            height: 25px;
+            background: #444;
+            color: white;
+            margin: 30px auto;
+            text-align: center;
+            line-height: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="esquerda">
+
+        <div class="caixa">
+            <h1>Selecione seus assentos</h1>
+        </div>
+
+        <div id="sala"></div>
+        <div class="tela">
+    TELA
+</div>
+
+    </div>
+
+    <div class="direita">
+
+        <img src="https://tse3.mm.bing.net/th/id/OIP.tQ7crTdugCFeLszFvEwrdQHaEK?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" class="poster">
+
+        <h1>O Gênio do Crime</h1>
+        <h3>19:00, Thursday, May 14, 2026</h3>
+        <h3>Cinépolis - Blumenau Norte (SC)</h3>
+        <h3>cada assento custa 10 reais</h3>
+        
+
+        <h3 id="assentosSelecionados">Assentos: 0</h3>
+        <h3 id="precoTotal">Preço: R$ 0</h3>
+        <div class="caixa-botao">
+    <button class="botao-confirmar">Confirmar compra</button>
+</div>
+
+    </div>
+
+</div>
+
+<script>
+
+let selecionados = []
+const preco = 10
+
+const sala = document.getElementById('sala')
+const letras = ['A','B','C','D','E','F','G','H','I','J','K']
+
+function atualizarInfo(){
+
+    document.getElementById('assentosSelecionados').innerHTML =
+        "Assentos: " + selecionados.join(", ")
+
+    document.getElementById('precoTotal').innerHTML =
+        "Preço: R$ " + (selecionados.length * preco)
+}
+
+for(let linhaNumero = 0; linhaNumero < 11; linhaNumero++){
+
+    const linha = document.createElement('div')
+    linha.setAttribute('class', 'linha')
+
+    const letra = document.createElement('span')
+    letra.innerHTML = letras[linhaNumero] + " "
+    letra.setAttribute('class', 'letra')
+    linha.appendChild(letra)
+
+    for(let numero = 1; numero <= 10; numero++) {
+
+        const poltrona = document.createElement('button')
+
+        poltrona.innerHTML = numero
+        poltrona.setAttribute('class', 'poltrona')
+
+        poltrona.onclick = function(){
+
+            const id = letras[linhaNumero] + numero
+
+            poltrona.classList.toggle('verde')
+
+            if(poltrona.classList.contains('verde')){
+                selecionados.push(id)
+            } else {
+                selecionados = selecionados.filter(item => item !== id)
+            }
+
+            atualizarInfo()
+        }
+
+        linha.appendChild(poltrona)
+    }
+
+    sala.appendChild(linha)
+}
+
+</script>
+
+</body>
+</html>
