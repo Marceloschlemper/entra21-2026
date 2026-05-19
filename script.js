@@ -32,4 +32,8 @@
                     <td>${pessoa.telefone}</td>
                 </tr>
             `;
+
+            document.getElementById('nome').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('telefone').value = '';
         });
