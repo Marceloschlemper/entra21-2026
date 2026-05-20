@@ -36,8 +36,10 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             position: relative;
-            min-height: 180px;
+            min-height: 220px;
 
+            display: flex;
+            flex-direction: column;
 }
 
         .card h3{
@@ -75,15 +77,22 @@
       .editar{
 
     margin-top: 8px;
-    background-color: #2d89ef;
+    background-color: #c95f09;
     color: white;
     border: none;
     padding: 5px 10px;
     font-size: 12px;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: auto;
 
-}
+       }
+
+     .email{
+
+    min-height: 45px;
+
+        }
     </style>
 
 </head>
@@ -131,10 +140,10 @@ function mostrarClientes(){
 
                 <h3>${pessoa.nome}</h3>
 
-                <p>
+               <p class="email">
                     <strong>Email:</strong>
                     ${pessoa.email}
-                </p>
+               </p>
 
                 <p>
                     <strong>Telefone:</strong>
