@@ -61,6 +61,7 @@ botaoCadastrar.addEventListener('click', () => {
                 <td>${pessoa.nome}</td>
                 <td>${pessoa.email}</td>
                 <td>${pessoa.telefone}</td>
+                 
             </tr>
 
         `;
@@ -72,6 +73,7 @@ botaoCadastrar.addEventListener('click', () => {
     document.getElementById('email').value = '';
 
     document.getElementById('telefone').value = '';
+
 
 });
 
