@@ -22,20 +22,44 @@
             border-radius: 10px;
         }
 
-        table{
-            width: 100%;
-            border-collapse: collapse;
+       #listaClientes{
+
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 20px;
+
+}
+        .card{
+
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            min-height: 180px;
+
+}
+
+        .card h3{
+
+            margin-top: 0;
+            color: rgb(35, 56, 241);
+
         }
 
-        th, td{
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-        }
+        .excluir{
 
-        th{
-            background-color: #2d89ef;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
             color: white;
+            border: none;
+             border-radius: 5px;
+             width: 30px;
+             height: 30px;
+              cursor: pointer;
+
         }
 
         button{
@@ -58,21 +82,7 @@
 
         <h2>Clientes Cadastrados</h2>
 
-        <table>
-
-            <thead>
-               <tr>
-    <th>Nome</th>
-    <th>Email</th>
-    <th>Telefone</th>
-    <th>Ação</th>
-</tr>
-            </thead>
-
-            <tbody id="tabelaClientes">
-            </tbody>
-
-        </table>
+        <div id="listaClientes"></div>
 
         <button onclick="voltar()">
             voltar ao cadastro
@@ -81,39 +91,45 @@
     </div>
 
     <script>
-
-        const tabela =
-    document.getElementById('tabelaClientes');
+        const lista =
+    document.getElementById('listaClientes');
 
 let pessoas =
     JSON.parse(localStorage.getItem('clientes'))
     || [];
 
 
-// Função para mostrar clientes
+
 function mostrarClientes(){
 
-    tabela.innerHTML = '';
+    lista.innerHTML = '';
 
     pessoas.forEach((pessoa, indice) => {
 
-        tabela.innerHTML += `
+        lista.innerHTML += `
         
-            <tr>
-                <td>${pessoa.nome}</td>
+            <div class="card">
 
-                <td>${pessoa.email}</td>
+                <button
+                    class="excluir"
+                    onclick="excluirCliente(${indice})"
+                >
+                    X
+                </button>
 
-                <td>${pessoa.telefone}</td>
+                <h3>${pessoa.nome}</h3>
 
-                <td>
-                
-                    <button onclick="excluirCliente(${indice})">
-                        X
-                    </button>
+                <p>
+                    <strong>Email:</strong>
+                    ${pessoa.email}
+                </p>
 
-                </td>
-            </tr>
+                <p>
+                    <strong>Telefone:</strong>
+                    ${pessoa.telefone}
+                </p>
+
+            </div>
 
         `;
 
@@ -122,7 +138,6 @@ function mostrarClientes(){
 }
 
 
-// Função para excluir
 
 function excluirCliente(indice){
 
@@ -138,7 +153,6 @@ function excluirCliente(indice){
 }
 
 
-// Botao voltar
 
 function voltar(){
 
@@ -148,8 +162,8 @@ function voltar(){
 }
 
 
-mostrarClientes();
 
+mostrarClientes();
     </script>
 
 </body>
