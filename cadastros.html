@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastros</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container{
+            max-width: 700px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td{
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th{
+            background-color: #2d89ef;
+            color: white;
+        }
+
+        button{
+            margin-top: 20px;
+            padding: 10px;
+            border: none;
+            background-color: #2d89ef;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Clientes Cadastrados</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                </tr>
+            </thead>
+
+            <tbody id="tabelaClientes">
+            </tbody>
+
+        </table>
+
+        <button onclick="voltar()">
+            voltar para cadastro
+        </button>
+
+    </div>
+
+    <script>
+
+        const tabela =
+            document.getElementById('tabelaClientes');
+
+        const pessoas =
+            JSON.parse(localStorage.getItem('clientes'))
+            || [];
+
+        pessoas.forEach((pessoa) => {
+
+            tabela.innerHTML += `
+                <tr>
+                    <td>${pessoa.nome}</td>
+                    <td>${pessoa.email}</td>
+                    <td>${pessoa.telefone}</td>
+                </tr>
+            `;
+
+        });
+
+        function voltar(){
+
+            window.location.href = 'index.html';
+
+        }
+
+    </script>
+
+</body>
+</html>
