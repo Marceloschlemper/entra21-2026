@@ -61,11 +61,12 @@
         <table>
 
             <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Telefone</th>
-                </tr>
+               <tr>
+    <th>Nome</th>
+    <th>Email</th>
+    <th>Telefone</th>
+    <th>Ação</th>
+</tr>
             </thead>
 
             <tbody id="tabelaClientes">
@@ -82,29 +83,72 @@
     <script>
 
         const tabela =
-            document.getElementById('tabelaClientes');
+    document.getElementById('tabelaClientes');
 
-        const pessoas =
-            JSON.parse(localStorage.getItem('clientes'))
-            || [];
+let pessoas =
+    JSON.parse(localStorage.getItem('clientes'))
+    || [];
 
-        pessoas.forEach((pessoa) => {
 
-            tabela.innerHTML += `
-                <tr>
-                    <td>${pessoa.nome}</td>
-                    <td>${pessoa.email}</td>
-                    <td>${pessoa.telefone}</td>
-                </tr>
-            `;
+// Função para mostrar clientes
+function mostrarClientes(){
 
-        });
+    tabela.innerHTML = '';
 
-        function voltar(){
+    pessoas.forEach((pessoa, indice) => {
 
-            window.location.href = 'index.html';
+        tabela.innerHTML += `
+        
+            <tr>
+                <td>${pessoa.nome}</td>
 
-        }
+                <td>${pessoa.email}</td>
+
+                <td>${pessoa.telefone}</td>
+
+                <td>
+                
+                    <button onclick="excluirCliente(${indice})">
+                        X
+                    </button>
+
+                </td>
+            </tr>
+
+        `;
+
+    });
+
+}
+
+
+// Função para excluir
+
+function excluirCliente(indice){
+
+    pessoas.splice(indice, 1);
+
+    localStorage.setItem(
+        'clientes',
+        JSON.stringify(pessoas)
+    );
+
+    mostrarClientes();
+
+}
+
+
+// Botao voltar
+
+function voltar(){
+
+    window.location.href =
+        'index.html';
+
+}
+
+
+mostrarClientes();
 
     </script>
 
