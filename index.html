@@ -1,108 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+</head>
+<body>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h2,
+h3 {
+    text-align: center;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2d89ef;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(104, 104, 248);
+}
+
+table {
+    border-collapse: collapse;
+    background-color: white;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: rgb(16, 16, 248);
+    color: white;
+}
+
+.botao-link:hover{
+
+    background: none;
+
+    text-decoration: underline;
+
+}
+
+.botao-link{
+
+    background: none;
+    border: none;
+
+    color: rgb(93, 93, 255);
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    display: block;
+
+    margin-right: auto;
+
+}
+    </style>
+
+  
+
+    <div class="container">
+
+        <h2>Cadastro de Clientes</h2>
+
+        <div class="formulario">
 
 
-const pessoas =
-    JSON.parse(localStorage.getItem('clientes'))
-    || [];
 
-const tabela =
-    document.getElementById('tabelaClientes');
+            <input type="text" id="nome" placeholder="nome">
 
+            <input type="email" id="email" placeholder="email">
 
-// Cadastrar
+            <input type="tel" id="telefone" placeholder="telefone">
 
-const botaoCadastrar =
-    document.getElementById('cadastrar');
-
-botaoCadastrar.addEventListener('click', () => {
-
-    const nome =
-        document.getElementById('nome').value;
-
-    const email =
-        document.getElementById('email').value;
-
-    const telefone =
-        document.getElementById('telefone').value;
-
-    if(
-        nome === '' ||
-        email === '' ||
-        telefone === ''
-    ){
-
-        alert('Preencha todos os campos');
-
-        return;
-    }
-
-    const pessoa = {
-
-        nome,
-        email,
-        telefone
-
-    };
-
-    pessoas.push(pessoa);
-
-    localStorage.setItem(
-        'clientes',
-        JSON.stringify(pessoas)
-    );
+            <input type="tel" id="telefone" placeholder="CPF">
 
 
-    // verifica se a tabela existe
 
-    if(tabela){
+            <button id="cadastrar">
+                Cadastrar
+            </button>
 
-        tabela.innerHTML += `
         
-            <tr>
-                <td>${pessoa.nome}</td>
-                <td>${pessoa.email}</td>
-                <td>${pessoa.telefone}</td>
-            </tr>
-
-        `;
-
-    }
-
-    document.getElementById('nome').value = '';
-
-    document.getElementById('email').value = '';
-
-    document.getElementById('telefone').value = '';
-
-});
 
 
+            <button id="limparCadastros">
+                Limpar todos os cadastros
+            </button>
 
-// mostrar cadastros
+             <button id="salvos" class="botao-link">
+                mostrar cadastros
+            </button>
+            
 
-const botaoMostrar =
-    document.getElementById('salvos');
+   
 
-botaoMostrar.addEventListener('click', () => {
+    <script src="script.js"></script>
 
-    window.location.href =
-        'cadastros.html';
-
-});
-
-
-
-
-// limpar cadastros
-
-const botaoLimparCadastros =
-    document.getElementById('limparCadastros');
-
-botaoLimparCadastros.addEventListener('click', () => {
-
-    localStorage.removeItem('clientes');
-
-    alert('Cadastros apagados');
-
-    location.reload();
-
-});
+</body>
+</html>
