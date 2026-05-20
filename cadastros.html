@@ -72,6 +72,18 @@
             cursor: pointer;
         }
 
+      .editar{
+
+    margin-top: 8px;
+    background-color: #2d89ef;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
     </style>
 
 </head>
@@ -129,6 +141,14 @@ function mostrarClientes(){
                     ${pessoa.telefone}
                 </p>
 
+                 <button
+                    class="editar"
+                    onclick="editarCliente(${indice})"
+                 >
+                    Editar
+                </button>
+
+
             </div>
 
         `;
@@ -151,6 +171,61 @@ function excluirCliente(indice){
     mostrarClientes();
 
 }
+
+//função editar
+
+function editarCliente(indice){
+
+    const novoNome = prompt(
+        'novo nome:',
+        pessoas[indice].nome
+    );
+
+    const novoEmail = prompt(
+        'novo email:',
+        pessoas[indice].email
+    );
+
+    const novoTelefone = prompt(
+        'novo telefone:',
+        pessoas[indice].telefone
+    );
+
+
+    if(
+        novoNome === null ||
+        novoEmail === null ||
+        novoTelefone === null
+    ){
+        return;
+    }
+
+
+    pessoas[indice] = {
+
+        nome: novoNome,
+
+        email: novoEmail,
+
+        telefone: novoTelefone
+
+    };
+
+
+    localStorage.setItem(
+        'clientes',
+        JSON.stringify(pessoas)
+    );
+
+
+    mostrarClientes();
+
+}
+
+mostrarClientes();
+
+    
+
 
 
 
