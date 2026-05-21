@@ -2,6 +2,33 @@ const pessoas =
     JSON.parse(localStorage.getItem('clientes'))
     || [];
 
+    const inputNome =
+    document.getElementById('nome');
+
+inputNome.addEventListener('input', () => {
+
+    const nomeDigitado =
+        inputNome.value.toLowerCase();
+
+    const clienteEncontrado =
+        pessoas.find((pessoa) => {
+
+            return (
+                pessoa.nome.toLowerCase()
+                === nomeDigitado
+            );
+
+        });
+
+    if(clienteEncontrado){
+
+        document.getElementById('email').value =
+            clienteEncontrado.email;
+
+    }
+
+});
+
 
 // CADASTRAR
 
