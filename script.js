@@ -1,14 +1,9 @@
-
-
 const pessoas =
     JSON.parse(localStorage.getItem('clientes'))
     || [];
 
-const tabela =
-    document.getElementById('tabelaClientes');
 
-
-// Cadastrar
+// CADASTRAR
 
 const botaoCadastrar =
     document.getElementById('cadastrar');
@@ -24,6 +19,7 @@ botaoCadastrar.addEventListener('click', () => {
     const telefone =
         document.getElementById('telefone').value;
 
+
     if(
         nome === '' ||
         email === '' ||
@@ -33,7 +29,9 @@ botaoCadastrar.addEventListener('click', () => {
         alert('Preencha todos os campos');
 
         return;
+
     }
+
 
     const pessoa = {
 
@@ -43,30 +41,15 @@ botaoCadastrar.addEventListener('click', () => {
 
     };
 
+
     pessoas.push(pessoa);
+
 
     localStorage.setItem(
         'clientes',
         JSON.stringify(pessoas)
     );
 
-
-    // verifica se a tabela existe
-
-    if(tabela){
-
-        tabela.innerHTML += `
-        
-            <tr>
-                <td>${pessoa.nome}</td>
-                <td>${pessoa.email}</td>
-                <td>${pessoa.telefone}</td>
-                 
-            </tr>
-
-        `;
-
-    }
 
     document.getElementById('nome').value = '';
 
@@ -75,11 +58,14 @@ botaoCadastrar.addEventListener('click', () => {
     document.getElementById('telefone').value = '';
 
 
+    alert('Cliente cadastrado');
+
 });
 
 
 
-// mostrar cadastros
+
+// MOSTRAR CADASTROS
 
 const botaoMostrar =
     document.getElementById('salvos');
@@ -94,17 +80,27 @@ botaoMostrar.addEventListener('click', () => {
 
 
 
-// limpar cadastros
+// LIMPAR CADASTROS
 
 const botaoLimparCadastros =
     document.getElementById('limparCadastros');
 
 botaoLimparCadastros.addEventListener('click', () => {
 
-    localStorage.removeItem('clientes');
+    const confirmar =
+        confirm(
+            'Deseja apagar todos os cadastros?'
+        );
 
-    alert('Cadastros apagados');
 
-    location.reload();
+    if(confirmar){
+
+        localStorage.removeItem('clientes');
+
+        alert('Cadastros apagados');
+
+        location.reload();
+
+    }
 
 });
