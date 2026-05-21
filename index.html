@@ -3,81 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <title>Cadastros</title>
 
     <style>
 
         body{
-            font-family: Arial, sans-serif;
+            font-family: Arial;
             background-color: #f4f4f4;
-            margin: 0;
             padding: 20px;
         }
 
         .container{
-            max-width: 700px;
+            max-width: 900px;
             margin: auto;
             background-color: white;
             padding: 20px;
             border-radius: 10px;
         }
 
-        h2{
-            text-align: center;
+        #listaClientes{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
-        .formulario{
+        .card{
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            min-height: 150px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
         }
 
-        input{
-            padding: 10px;
+        .card h3{
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: rgb(35, 56, 241);
+        }
+
+        .card p{
+            margin: 4px 0;
+        }
+
+        .resposta{
+            color: #777;
+            font-size: 13px;
+        }
+
+        .excluir{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .editar{
+            margin-top: auto;
+            background-color: rgb(2, 122, 18);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .detalhes{
+            background-color: rgb(35, 56, 241);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .card input{
+            margin-bottom: 10px;
+            padding: 8px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 16px;
         }
 
-        button{
+        .salvar{
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .cancelar{
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .voltar{
+            margin-top: 20px;
             padding: 10px;
             border: none;
-            border-radius: 5px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .botao-cadastrar{
             background-color: #2d89ef;
-        }
-
-        .botao-cadastrar:hover{
-            background-color: #1c6fd1;
-        }
-
-        .botao-limpar{
-            background-color: rgb(10, 2, 2);
-        }
-
-        .botao-limpar:hover{
-            background-color: rgb(32, 31, 31);
-        }
-
-        .botao-link{
-            background: none;
-            border: none;
-            color: rgb(2, 122, 18);
-            font-size: 16px;
+            color: white;
+            border-radius: 5px;
             cursor: pointer;
-            padding: 0;
-            display: block;
-            margin-right: auto;
         }
 
-        .botao-link:hover{
-            background: none;
-            text-decoration: underline;
+        #areaDetalhes{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal{
+            background-color: white;
+            width: 400px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .modal h2{
+            margin-top: 0;
+            color: rgb(35, 56, 241);
+        }
+
+        .modal p{
+            font-size: 18px;
+            margin-bottom: 15px;
         }
 
     </style>
@@ -88,37 +161,352 @@
 
     <div class="container">
 
-        <h2>Cadastro de Clientes</h2>
+        <h2>Clientes Cadastrados</h2>
 
-        <div class="formulario">
+        <div id="listaClientes"></div>
 
-            <input type="text" id="nome" placeholder="Nome">
-
-            <input type="email" id="email" placeholder="Email">
-
-            <input type="tel" id="telefone" placeholder="Telefone">
-
-            <input type="text" id ="cep" placeholder="CEP">
-
-            <button id="cadastrar" class="botao-cadastrar">
-                Cadastrar
-            </button>
-
-            <button id="limparCadastros" class="botao-limpar">
-                Limpar todos os cadastros
-            </button>
-
-            <button id="salvos" class="botao-link">
-                Mostrar cadastros
-            </button>
-
-
-
-        </div>
+        <button
+            class="voltar"
+            onclick="voltar()"
+        >
+            Voltar ao cadastro
+        </button>
 
     </div>
 
-    <script src="script.js"></script>
+    <div id="areaDetalhes"></div>
+
+    <script>
+
+        const lista =
+            document.getElementById('listaClientes');
+
+        let pessoas =
+            JSON.parse(localStorage.getItem('clientes'))
+            || [];
+
+
+        function mostrarClientes(){
+
+            lista.innerHTML = '';
+
+            pessoas.forEach((pessoa, indice) => {
+
+                lista.innerHTML += `
+                
+                    <div class="card">
+
+                        <button
+                            class="excluir"
+                            onclick="excluirCliente(${indice})"
+                        >
+                            X
+                        </button>
+
+                        <h3>${pessoa.nome}</h3>
+
+                        <p>
+                            <strong>Email:</strong>
+
+                            <span class="resposta">
+                                ${pessoa.email}
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Telefone:</strong>
+
+                            <span class="resposta">
+                                ${pessoa.telefone}
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>CEP:</strong>
+
+                            <span class="resposta">
+                                ${pessoa.cep}
+                            </span>
+                        </p>
+
+                        <p id="endereco${indice}">
+                            Carregando endereço...
+                        </p>
+
+                        <button
+                            class="editar"
+                            onclick="editarCliente(${indice})"
+                        >
+                            Editar
+                        </button>
+
+                        <button
+                            class="detalhes"
+                            onclick="mostrarDetalhes(${indice})"
+                        >
+                            Detalhes
+                        </button>
+
+                    </div>
+                `;
+
+
+                fetch(
+                    `https://viacep.com.br/ws/${pessoa.cep}/json/`
+                )
+
+                .then(resposta => resposta.json())
+
+                .then(dados => {
+
+                    document.getElementById(
+                        `endereco${indice}`
+                    ).innerHTML = `
+                    
+                        <strong>Endereço:</strong>
+
+                        <span class="resposta">
+                            ${dados.logradouro},
+                            ${dados.bairro}
+                            - ${dados.localidade}
+                        </span>
+
+                    `;
+
+                });
+
+            });
+
+        }
+
+
+
+        function excluirCliente(indice){
+
+            pessoas.splice(indice, 1);
+
+            localStorage.setItem(
+                'clientes',
+                JSON.stringify(pessoas)
+            );
+
+            mostrarClientes();
+
+        }
+
+
+
+        function editarCliente(indice){
+
+            lista.innerHTML = '';
+
+            pessoas.forEach((pessoa, i) => {
+
+                if(i === indice){
+
+                    lista.innerHTML += `
+                    
+                        <div class="card">
+
+                            <input
+                                type="text"
+                                id="editarNome"
+                                value="${pessoa.nome}"
+                            >
+
+                            <input
+                                type="email"
+                                id="editarEmail"
+                                value="${pessoa.email}"
+                            >
+
+                            <input
+                                type="text"
+                                id="editarTelefone"
+                                value="${pessoa.telefone}"
+                            >
+
+                            <input
+                                type="text"
+                                id="editarCep"
+                                value="${pessoa.cep}"
+                            >
+
+                            <button
+                                class="salvar"
+                                onclick="salvarEdicao(${indice})"
+                            >
+                                Salvar
+                            </button>
+
+                            <button
+                                class="cancelar"
+                                onclick="mostrarClientes()"
+                            >
+                                Cancelar
+                            </button>
+
+                        </div>
+                    `;
+
+                }
+
+                else{
+
+                    lista.innerHTML += `
+                    
+                        <div class="card">
+
+                            <button
+                                class="excluir"
+                                onclick="excluirCliente(${i})"
+                            >
+                                X
+                            </button>
+
+                            <h3>${pessoa.nome}</h3>
+
+                        </div>
+                    `;
+
+                }
+
+            });
+
+        }
+
+
+
+        function salvarEdicao(indice){
+
+            const novoNome =
+                document.getElementById('editarNome').value;
+
+            const novoEmail =
+                document.getElementById('editarEmail').value;
+
+            const novoTelefone =
+                document.getElementById('editarTelefone').value;
+
+            const novoCep =
+                document.getElementById('editarCep').value;
+
+
+            pessoas[indice] = {
+
+                nome: novoNome,
+                email: novoEmail,
+                telefone: novoTelefone,
+                cep: novoCep
+
+            };
+
+
+            localStorage.setItem(
+                'clientes',
+                JSON.stringify(pessoas)
+            );
+
+
+            mostrarClientes();
+
+        }
+
+
+
+        function mostrarDetalhes(indice){
+
+            const pessoa = pessoas[indice];
+
+            fetch(
+                `https://viacep.com.br/ws/${pessoa.cep}/json/`
+            )
+
+            .then(resposta => resposta.json())
+
+            .then(dados => {
+
+                document.getElementById(
+                    'areaDetalhes'
+                ).style.display = 'flex';
+
+
+                document.getElementById(
+                    'areaDetalhes'
+                ).innerHTML = `
+                
+                    <div class="modal">
+
+                        <h2>${pessoa.nome}</h2>
+
+                        <p>
+                            <strong>Email:</strong>
+                            ${pessoa.email}
+                        </p>
+
+                        <p>
+                            <strong>Telefone:</strong>
+                            ${pessoa.telefone}
+                        </p>
+
+                        <p>
+                            <strong>CEP:</strong>
+                            ${pessoa.cep}
+                        </p>
+
+                        <p>
+                            <strong>Rua:</strong>
+                            ${dados.logradouro}
+                        </p>
+
+                        <p>
+                            <strong>Bairro:</strong>
+                            ${dados.bairro}
+                        </p>
+
+                        <p>
+                            <strong>Cidade:</strong>
+                            ${dados.localidade}
+                        </p>
+
+                        <button
+                            class="cancelar"
+                            onclick="fecharDetalhes()"
+                        >
+                            Fechar
+                        </button>
+
+                    </div>
+                
+                `;
+
+            });
+
+        }
+
+
+
+        function fecharDetalhes(){
+
+            document.getElementById(
+                'areaDetalhes'
+            ).style.display = 'none';
+
+        }
+
+
+
+        function voltar(){
+
+            window.location.href =
+                'index.html';
+
+        }
+
+
+        mostrarClientes();
+
+    </script>
 
 </body>
 </html>
