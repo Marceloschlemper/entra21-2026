@@ -33,7 +33,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             position: relative;
-            min-height: 220px;
+            min-height: 260px;
             display: flex;
             flex-direction: column;
         }
@@ -65,8 +65,7 @@
             background-color: rgb(2, 122, 18);
             color: white;
             border: none;
-            padding: 5px 10px;
-            font-size: 12px;
+            padding: 8px;
             border-radius: 5px;
             cursor: pointer;
         }
@@ -167,6 +166,15 @@
                             ${pessoa.telefone}
                         </p>
 
+                        <p>
+                            <strong>CEP:</strong>
+                            ${pessoa.cep}
+                        </p>
+
+                        <p id="endereco${indice}">
+                            Carregando endereço...
+                        </p>
+
                         <button
                             class="editar"
                             onclick="editarCliente(${indice})"
@@ -176,6 +184,28 @@
 
                     </div>
                 `;
+
+
+                fetch(
+                    `https://viacep.com.br/ws/${pessoa.cep}/json/`
+                )
+
+                .then(resposta => resposta.json())
+
+                .then(dados => {
+
+                    document.getElementById(
+                        `endereco${indice}`
+                    ).innerHTML = `
+                    
+                        <strong>Endereço:</strong>
+                        ${dados.logradouro},
+                        ${dados.bairro}
+                        - ${dados.localidade}
+
+                    `;
+
+                });
 
             });
 
@@ -226,6 +256,12 @@
                                 type="text"
                                 id="editarTelefone"
                                 value="${pessoa.telefone}"
+                            >
+
+                            <input
+                                type="text"
+                                id="editarCep"
+                                value="${pessoa.cep}"
                             >
 
                             <button
@@ -294,12 +330,16 @@
             const novoTelefone =
                 document.getElementById('editarTelefone').value;
 
+            const novoCep =
+                document.getElementById('editarCep').value;
+
 
             pessoas[indice] = {
 
                 nome: novoNome,
                 email: novoEmail,
-                telefone: novoTelefone
+                telefone: novoTelefone,
+                cep: novoCep
 
             };
 
@@ -322,7 +362,6 @@
                 'index.html';
 
         }
-
 
 
         mostrarClientes();
