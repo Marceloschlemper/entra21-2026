@@ -29,22 +29,28 @@
 
         .card{
             background-color: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             position: relative;
-            min-height: 260px;
+            min-height: 150px;
             display: flex;
             flex-direction: column;
         }
 
         .card h3{
             margin-top: 0;
+            margin-bottom: 10px;
             color: rgb(35, 56, 241);
         }
 
-        .email{
-            min-height: 45px;
+        .card p{
+            margin: 4px 0;
+        }
+
+        .resposta{
+            color: #777;
+            font-size: 13px;
         }
 
         .excluir{
@@ -63,6 +69,16 @@
         .editar{
             margin-top: auto;
             background-color: rgb(2, 122, 18);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .detalhes{
+            background-color: rgb(35, 56, 241);
             color: white;
             border: none;
             padding: 8px;
@@ -106,6 +122,37 @@
             cursor: pointer;
         }
 
+        #areaDetalhes{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal{
+            background-color: white;
+            width: 400px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .modal h2{
+            margin-top: 0;
+            color: rgb(35, 56, 241);
+        }
+
+        .modal p{
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
     </style>
 
 </head>
@@ -126,6 +173,8 @@
         </button>
 
     </div>
+
+    <div id="areaDetalhes"></div>
 
     <script>
 
@@ -156,19 +205,28 @@
 
                         <h3>${pessoa.nome}</h3>
 
-                        <p class="email">
+                        <p>
                             <strong>Email:</strong>
-                            ${pessoa.email}
+
+                            <span class="resposta">
+                                ${pessoa.email}
+                            </span>
                         </p>
 
                         <p>
                             <strong>Telefone:</strong>
-                            ${pessoa.telefone}
+
+                            <span class="resposta">
+                                ${pessoa.telefone}
+                            </span>
                         </p>
 
                         <p>
                             <strong>CEP:</strong>
-                            ${pessoa.cep}
+
+                            <span class="resposta">
+                                ${pessoa.cep}
+                            </span>
                         </p>
 
                         <p id="endereco${indice}">
@@ -180,6 +238,13 @@
                             onclick="editarCliente(${indice})"
                         >
                             Editar
+                        </button>
+
+                        <button
+                            class="detalhes"
+                            onclick="mostrarDetalhes(${indice})"
+                        >
+                            Detalhes
                         </button>
 
                     </div>
@@ -199,9 +264,12 @@
                     ).innerHTML = `
                     
                         <strong>Endereço:</strong>
-                        ${dados.logradouro},
-                        ${dados.bairro}
-                        - ${dados.localidade}
+
+                        <span class="resposta">
+                            ${dados.logradouro},
+                            ${dados.bairro}
+                            - ${dados.localidade}
+                        </span>
 
                     `;
 
@@ -298,16 +366,6 @@
 
                             <h3>${pessoa.nome}</h3>
 
-                            <p class="email">
-                                <strong>Email:</strong>
-                                ${pessoa.email}
-                            </p>
-
-                            <p>
-                                <strong>Telefone:</strong>
-                                ${pessoa.telefone}
-                            </p>
-
                         </div>
                     `;
 
@@ -351,6 +409,88 @@
 
 
             mostrarClientes();
+
+        }
+
+
+
+        function mostrarDetalhes(indice){
+
+            const pessoa = pessoas[indice];
+
+            fetch(
+                `https://viacep.com.br/ws/${pessoa.cep}/json/`
+            )
+
+            .then(resposta => resposta.json())
+
+            .then(dados => {
+
+                document.getElementById(
+                    'areaDetalhes'
+                ).style.display = 'flex';
+
+
+                document.getElementById(
+                    'areaDetalhes'
+                ).innerHTML = `
+                
+                    <div class="modal">
+
+                        <h2>${pessoa.nome}</h2>
+
+                        <p>
+                            <strong>Email:</strong>
+                            ${pessoa.email}
+                        </p>
+
+                        <p>
+                            <strong>Telefone:</strong>
+                            ${pessoa.telefone}
+                        </p>
+
+                        <p>
+                            <strong>CEP:</strong>
+                            ${pessoa.cep}
+                        </p>
+
+                        <p>
+                            <strong>Rua:</strong>
+                            ${dados.logradouro}
+                        </p>
+
+                        <p>
+                            <strong>Bairro:</strong>
+                            ${dados.bairro}
+                        </p>
+
+                        <p>
+                            <strong>Cidade:</strong>
+                            ${dados.localidade}
+                        </p>
+
+                        <button
+                            class="cancelar"
+                            onclick="fecharDetalhes()"
+                        >
+                            Fechar
+                        </button>
+
+                    </div>
+                
+                `;
+
+            });
+
+        }
+
+
+
+        function fecharDetalhes(){
+
+            document.getElementById(
+                'areaDetalhes'
+            ).style.display = 'none';
 
         }
 
