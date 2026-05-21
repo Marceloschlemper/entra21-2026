@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Cadastros</title>
 
     <style>
@@ -15,56 +14,90 @@
         }
 
         .container{
-            max-width: 700px;
+            max-width: 900px;
             margin: auto;
             background-color: white;
             padding: 20px;
             border-radius: 10px;
         }
 
-       #listaClientes{
+        #listaClientes{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
 
-         display: grid;
-         grid-template-columns: repeat(3, 1fr);
-         gap: 20px;
-
-}
         .card{
-
             background-color: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             position: relative;
             min-height: 220px;
-
             display: flex;
             flex-direction: column;
-}
+        }
 
         .card h3{
-
             margin-top: 0;
             color: rgb(35, 56, 241);
+        }
 
+        .email{
+            min-height: 45px;
         }
 
         .excluir{
-
             position: absolute;
             top: 10px;
             right: 10px;
             background-color: red;
             color: white;
             border: none;
-             border-radius: 5px;
-             width: 30px;
-             height: 30px;
-              cursor: pointer;
-
+            border-radius: 5px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
         }
 
-        button{
+        .editar{
+            margin-top: auto;
+            background-color: rgb(2, 122, 18);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .card input{
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .salvar{
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .cancelar{
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .voltar{
             margin-top: 20px;
             padding: 10px;
             border: none;
@@ -74,25 +107,6 @@
             cursor: pointer;
         }
 
-      .editar{
-
-    margin-top: 8px;
-    background-color: #c95f09;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: auto;
-
-       }
-
-     .email{
-
-    min-height: 45px;
-
-        }
     </style>
 
 </head>
@@ -105,149 +119,214 @@
 
         <div id="listaClientes"></div>
 
-        <button onclick="voltar()">
-            voltar ao cadastro
+        <button
+            class="voltar"
+            onclick="voltar()"
+        >
+            Voltar ao cadastro
         </button>
 
     </div>
 
     <script>
+
         const lista =
-    document.getElementById('listaClientes');
+            document.getElementById('listaClientes');
 
-let pessoas =
-    JSON.parse(localStorage.getItem('clientes'))
-    || [];
-
-
-
-function mostrarClientes(){
-
-    lista.innerHTML = '';
-
-    pessoas.forEach((pessoa, indice) => {
-
-        lista.innerHTML += `
-        
-            <div class="card">
-
-                <button
-                    class="excluir"
-                    onclick="excluirCliente(${indice})"
-                >
-                    X
-                </button>
-
-                <h3>${pessoa.nome}</h3>
-
-               <p class="email">
-                    <strong>Email:</strong>
-                    ${pessoa.email}
-               </p>
-
-                <p>
-                    <strong>Telefone:</strong>
-                    ${pessoa.telefone}
-                </p>
-
-                 <button
-                    class="editar"
-                    onclick="editarCliente(${indice})"
-                 >
-                    Editar
-                </button>
+        let pessoas =
+            JSON.parse(localStorage.getItem('clientes'))
+            || [];
 
 
-            </div>
+        function mostrarClientes(){
 
-        `;
+            lista.innerHTML = '';
 
-    });
+            pessoas.forEach((pessoa, indice) => {
 
-}
+                lista.innerHTML += `
+                
+                    <div class="card">
+
+                        <button
+                            class="excluir"
+                            onclick="excluirCliente(${indice})"
+                        >
+                            X
+                        </button>
+
+                        <h3>${pessoa.nome}</h3>
+
+                        <p class="email">
+                            <strong>Email:</strong>
+                            ${pessoa.email}
+                        </p>
+
+                        <p>
+                            <strong>Telefone:</strong>
+                            ${pessoa.telefone}
+                        </p>
+
+                        <button
+                            class="editar"
+                            onclick="editarCliente(${indice})"
+                        >
+                            Editar
+                        </button>
+
+                    </div>
+                `;
+
+            });
+
+        }
 
 
 
-function excluirCliente(indice){
+        function excluirCliente(indice){
 
-    pessoas.splice(indice, 1);
+            pessoas.splice(indice, 1);
 
-    localStorage.setItem(
-        'clientes',
-        JSON.stringify(pessoas)
-    );
+            localStorage.setItem(
+                'clientes',
+                JSON.stringify(pessoas)
+            );
 
-    mostrarClientes();
+            mostrarClientes();
 
-}
-
-//função editar
-
-function editarCliente(indice){
-
-    const novoNome = prompt(
-        'novo nome:',
-        pessoas[indice].nome
-    );
-
-    const novoEmail = prompt(
-        'novo email:',
-        pessoas[indice].email
-    );
-
-    const novoTelefone = prompt(
-        'novo telefone:',
-        pessoas[indice].telefone
-    );
-
-
-    if(
-        novoNome === null ||
-        novoEmail === null ||
-        novoTelefone === null
-    ){
-        return;
-    }
-
-
-    pessoas[indice] = {
-
-        nome: novoNome,
-
-        email: novoEmail,
-
-        telefone: novoTelefone
-
-    };
-
-
-    localStorage.setItem(
-        'clientes',
-        JSON.stringify(pessoas)
-    );
-
-
-    mostrarClientes();
-
-}
-
-mostrarClientes();
-
-    
+        }
 
 
 
+        function editarCliente(indice){
 
-function voltar(){
+            lista.innerHTML = '';
 
-    window.location.href =
-        'index.html';
+            pessoas.forEach((pessoa, i) => {
 
-}
+                if(i === indice){
+
+                    lista.innerHTML += `
+                    
+                        <div class="card">
+
+                            <input
+                                type="text"
+                                id="editarNome"
+                                value="${pessoa.nome}"
+                            >
+
+                            <input
+                                type="email"
+                                id="editarEmail"
+                                value="${pessoa.email}"
+                            >
+
+                            <input
+                                type="text"
+                                id="editarTelefone"
+                                value="${pessoa.telefone}"
+                            >
+
+                            <button
+                                class="salvar"
+                                onclick="salvarEdicao(${indice})"
+                            >
+                                Salvar
+                            </button>
+
+                            <button
+                                class="cancelar"
+                                onclick="mostrarClientes()"
+                            >
+                                Cancelar
+                            </button>
+
+                        </div>
+                    `;
+
+                }
+
+                else{
+
+                    lista.innerHTML += `
+                    
+                        <div class="card">
+
+                            <button
+                                class="excluir"
+                                onclick="excluirCliente(${i})"
+                            >
+                                X
+                            </button>
+
+                            <h3>${pessoa.nome}</h3>
+
+                            <p class="email">
+                                <strong>Email:</strong>
+                                ${pessoa.email}
+                            </p>
+
+                            <p>
+                                <strong>Telefone:</strong>
+                                ${pessoa.telefone}
+                            </p>
+
+                        </div>
+                    `;
+
+                }
+
+            });
+
+        }
 
 
 
-mostrarClientes();
+        function salvarEdicao(indice){
+
+            const novoNome =
+                document.getElementById('editarNome').value;
+
+            const novoEmail =
+                document.getElementById('editarEmail').value;
+
+            const novoTelefone =
+                document.getElementById('editarTelefone').value;
+
+
+            pessoas[indice] = {
+
+                nome: novoNome,
+                email: novoEmail,
+                telefone: novoTelefone
+
+            };
+
+
+            localStorage.setItem(
+                'clientes',
+                JSON.stringify(pessoas)
+            );
+
+
+            mostrarClientes();
+
+        }
+
+
+
+        function voltar(){
+
+            window.location.href =
+                'index.html';
+
+        }
+
+
+
+        mostrarClientes();
+
     </script>
 
 </body>
