@@ -2,7 +2,10 @@ const pessoas =
     JSON.parse(localStorage.getItem('clientes'))
     || [];
 
-    const inputNome =
+
+//preencher email automatico
+
+const inputNome =
     document.getElementById('nome');
 
 inputNome.addEventListener('input', () => {
@@ -30,7 +33,9 @@ inputNome.addEventListener('input', () => {
 });
 
 
-// CADASTRAR
+
+
+// Cadastro
 
 const botaoCadastrar =
     document.getElementById('cadastrar');
@@ -46,11 +51,15 @@ botaoCadastrar.addEventListener('click', () => {
     const telefone =
         document.getElementById('telefone').value;
 
+    const cep =
+        document.getElementById('cep').value;
+
 
     if(
         nome === '' ||
         email === '' ||
-        telefone === ''
+        telefone === '' ||
+        cep === ''
     ){
 
         alert('Preencha todos os campos');
@@ -64,7 +73,8 @@ botaoCadastrar.addEventListener('click', () => {
 
         nome,
         email,
-        telefone
+        telefone,
+        cep
 
     };
 
@@ -84,6 +94,8 @@ botaoCadastrar.addEventListener('click', () => {
 
     document.getElementById('telefone').value = '';
 
+    document.getElementById('cep').value = '';
+
 
     alert('Cliente cadastrado');
 
@@ -92,7 +104,7 @@ botaoCadastrar.addEventListener('click', () => {
 
 
 
-// MOSTRAR CADASTROS
+// Mostrar cadastros
 
 const botaoMostrar =
     document.getElementById('salvos');
@@ -107,7 +119,7 @@ botaoMostrar.addEventListener('click', () => {
 
 
 
-// LIMPAR CADASTROS
+// Limpar cadastros
 
 const botaoLimparCadastros =
     document.getElementById('limparCadastros');
