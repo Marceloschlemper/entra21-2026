@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <style>
+        body{
+    font-family: Arial;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+input{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button{
+    padding: 10px;
+    border: none;
+    background-color: #2d89ef;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #1c6fd1;
+}
+
+#resultado{
+    margin-top: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+    </style>
+    <input 
+    type="text"
+    id="cidade"
+    placeholder="digite a cidade"
+    >
+
+    <button onclick="buscarClima()">
+        buscar clima
+    </button>
+
+    <div id="resultado"></div>
+
+    <script>
+        function buscarClima(){
+
+    const cidade =
+        document.getElementById('cidade').value;
+
+         const chave =
+        '997807ba6a693079487818cc8584b197';
+
+        fetch(  `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${chave}&units=metric&lang=pt_br`)
+
+        .then(resposta => resposta.json())
+
+        .then(dados => {
+
+            console.log(dados);
+
+            document.getElementById('resultado').innerHTML = `
+            
+               <h3>${dados.name}</h3>
+
+                <p>
+                    temperatura:
+                    ${dados.main.temp}°c
+                </p>
+
+                <p>
+                    clima:
+                    ${dados.weather[0].description}
+                </p>
+
+                `;
+            })
+        }
+    
+
+        
+    </script>
+
+
+
+</body>
+</html>
