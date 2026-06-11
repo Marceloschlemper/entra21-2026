@@ -34,7 +34,7 @@ insert  into produto (nome, preço, estoque) values
 ('chocolate',4.50,11);
 
 insert into pedido (data_pedido, nome_cliente) values
-('09-01-2009', 'Marcelo Schlemper');
+('2009-09-01', 'Marcelo Schlemper');
 
 select * from pedido;
 
@@ -95,7 +95,7 @@ where ip.id_pedido =1;
 
 
 use atividade_loja
-DELIMITER $$
+delimiter $$
 
 CREATE PROCEDURE MostrarPedido(IN p_id_pedido INT)
 BEGIN
@@ -110,7 +110,7 @@ BEGIN
     WHERE ip.id_pedido = p_id_pedido;
 END$$
 
-DELIMITER ;
+delimeter ;
 
 delimiter $$
 CREATE PROCEDURE AtualizarEstoque(
@@ -143,3 +143,17 @@ insert into produto (nome, preço, estoque) values
 CALL CadastrarProduto('abacaxi', 29.00, 9);
 
 SELECT * FROM produto;
+
+delimiter $$
+create procedure NovoPedido (
+in p_data  date,
+in p_nome_cliente varchar(100)
+)
+BEGIN
+insert into pedido (data_pedido, nome_cliente) values
+(p_data, p_nome_cliente);
+END $$
+delimiter ;
+
+CALL NovoPedido ('2010-01-09', 'lucas');
+SELECT * FROM pedido;
