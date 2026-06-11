@@ -110,7 +110,7 @@ BEGIN
     WHERE ip.id_pedido = p_id_pedido;
 END$$
 
-delimeter ;
+delimiter ;
 
 delimiter $$
 CREATE PROCEDURE AtualizarEstoque(
@@ -131,14 +131,17 @@ SELECT * FROM produto;
 
 CALL AtualizarEstoque(1, 2);
 
-
+delimiter $$
 create procedure CadastrarProduto (
 in p_nome  varchar(100),
 in p_preço  decimal(10,2),
 in p_estoque int
 )
+begin
 insert into produto (nome, preço, estoque) values 
 (p_nome, p_preço, p_estoque);
+end$$
+delimiter;
 
 CALL CadastrarProduto('abacaxi', 29.00, 9);
 
@@ -157,3 +160,80 @@ delimiter ;
 
 CALL NovoPedido ('2010-01-09', 'lucas');
 SELECT * FROM pedido;
+
+/*trigger*/
+
+create table clientes (
+id int auto_increment primary key,
+nome varchar(100),
+email varchar(100)
+);
+
+create table log_clientes(
+id int auto_increment primary key,
+mensagem varchar(250),
+data_evento datetime
+);
+
+delimiter $$
+
+create trigger trg_cliente_insert
+after insert on clientes
+for each row
+begin
+insert into log_clientes(
+mensagem,
+data_evento
+)
+values (
+concat('cliente_cadastrado: ', new.nome),
+now()
+);
+end$$
+delimiter ;
+
+insert into clientes(nome, email)
+values ('joao', 'joao@email.com');
+
+select * from log_clientes;
+
+-----
+create table produtos (
+id int auto_increment primary key,
+nome varchar(100),
+preço decimal(10,2)
+);
+
+create table historico_preço(
+id int auto_increment primary key,
+produto_id int,
+preço_novo decimal(10,2), 
+preço_antigo decimal(10,2),
+data_alteraçao datetime
+);
+
+delimiter $$
+create trigger trg_produto_update
+after update on produtos
+for each row
+begin
+insert into historico_preço(
+produto_id,
+preço_antigo,
+preço_novo,
+data_alteraçao
+)
+values (
+old.id,
+old.preço,
+new.preço,
+now()
+);
+end$$
+delimiter ;
+
+update produtos
+set preço = 120.00
+where id = 1;
+
+select * from produtos
