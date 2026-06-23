@@ -1,0 +1,15 @@
+create user 'vendedor'@'localhost'
+identified by '123';
+
+grant select, insert, update
+on loja.*
+to 'vendedor'@'localhost';
+
+show grants for 'vendedor'@'localhost';
+
+revoke update 
+on loja.*
+from 'vendedor'@'localhost';
+
+show grants for'vendedor'@'localhost';
+
